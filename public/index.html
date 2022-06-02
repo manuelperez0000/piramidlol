@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/logo.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="CryptoCans | Game Blockchain | NFTs Play to Earn" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <title>hgf</title>
+</head>
+
+
+<body >
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <script>
+
+    window.ethereum.on('accountsChanged', async _ => {
+      location.reload()
+    })
+    
+    window.ethereum.on('chainChanged', async _ => {
+      const chainId = "97"
+      const id = await window.ethereum.request({ method: 'eth_chainId' })
+      console.log(id)
+      if(id!=chainId){
+        window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
+      }
+      location.reload()
+    })
+
+  </script>
+</body>
+
+</html>

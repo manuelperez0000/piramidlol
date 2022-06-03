@@ -45,14 +45,23 @@ function App() {
   return (
     <div className="container-fluid bg-dark text-center">
       <div className="row">
-        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
-          <button className="btn btn-danger border"> 2 MATIC</button>
+        <div className="col-12 line col-sm-4 p-4 bg-success d-flex justify-content-center align-items-center">
+          <div>
+            <h1 className="text-white">Disponible!</h1>
+            <button className="btn btn-success border"> 2 MATIC</button>
+          </div>
         </div>
-        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
-          <button> 2 MATIC </button>
+        <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
+          <div>
+            <h1 className="text-white">No disponible!</h1>
+            <button className="btn btn-danger border"> 4 MATIC</button>
+          </div>
         </div>
-        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
-          <button> 2 MATIC </button>
+        <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
+          <div>
+            <h1 className="text-white">No disponible!</h1>
+            <button className="btn btn-danger border"> 8 MATIC</button>
+          </div>
         </div>
       </div>
       {/* 

@@ -2,81 +2,89 @@ import React, { useEffect, useState } from "react"
 import Web3 from 'web3'
 import startApp from '../services/start'
 import binanceContract from '../contracts/binanceContract'
+import Loder from "./loader/loader"
+import Turno from "./turno/turno"
+
 const web3 = new Web3(window.ethereum)
 const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.address)
 function App() {
 
-  const [bnb, setBnb] = useState(false)
   const [wallet, setWallet] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [turno1, setTurno1] = useState(false)
+  const [turno2, setTurno2] = useState(true)
+  const [turno3, setTurno3] = useState(true)
+  const [disponible1, setDisponible1] = useState(true)
+  const [disponible2, setDisponible2] = useState(false)
+  const [disponible3, setDisponible3] = useState(false)
 
   useEffect(() => {
-    start()
-  }, [wallet])
-
-  const start = () => {
     getWallet()
-  }
+  }, [])
 
   const getWallet = async () => {
     setLoading(true)
     const _wallet = await startApp.getWallet()
     setWallet(_wallet)
-    getBnb(_wallet)
-    getContract()
     setLoading(false)
   }
 
-  const getContract = () => {
-    console.log(contract.methods)
-  }
-
-  const getBnb = async (wallet) => {
-    const _bnb = await web3.eth.getBalance(wallet)
-    setBnb(_bnb)
-  }
-
-  const deposit = async (wallet) => {
-    contract.methods.depsit().send({ value: "20000000000000000", from: wallet }).then(res => {
+  const deposit = async (wallet,value) => {
+    setLoading(true)
+    contract.methods.depsit1().send({ value, from: wallet }).then(res => {
       console.log(res)
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err)).finally(() => {
+      setLoading(false)
+    })
   }
 
   return (
     <div className="container-fluid bg-dark text-center">
       <div className="row">
-        <div className="col-12 line col-sm-4 p-4 bg-success d-flex justify-content-center align-items-center">
-          <div>
-            <h1 className="text-white">Disponible!</h1>
-            <button className="btn btn-success border"> 2 MATIC</button>
+
+        {disponible1 ?
+          <div className="col-12 line col-sm-4 p-4 bg-success d-flex justify-content-center align-items-center">
+            <div>
+            <h2 className="nivelNumber">1</h2>
+              <h3 className="text-white">Disponible!</h3>
+              <h1 className="text-white">X1.7</h1>
+              {!loading && wallet ? <button className="btn btn-success border" onClick={() => deposit(wallet,"20000000000000000",1)}> Stake 2 MATIC</button> : <button className="btn btn-secondary"> Stake 2 MATIC </button>}
+            </div>
           </div>
+          :
+          <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
+            <div>
+              <h2 className="nivelNumber">1</h2>
+              <h3 className="text-white">No disponible!</h3>
+              <h1 className="text-white">X1.7</h1>
+              {!loading && wallet ? <button className="btn btn-success border"> Stake 2 MATIC</button> : <button className="btn btn-secondary"> Stake 2 MATIC </button>}
+            </div>
+          </div>
+        }
+        <Turno turno={turno1} />
+
+        <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
+          <div>
+            <h2 className="nivelNumber">2</h2>
+            <h3 className="text-white">Completa el nivel 1 para acceder al nivel 2</h3>
+            
+            <h1 className="text-white">X1.8</h1>
+            <button className="btn btn-danger border" onClick={() => deposit(wallet,"38000000000000000",2)}>Stake 3.4 MATIC</button>
+          </div>
+          <Turno turno={turno2} />
         </div>
         <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
           <div>
-            <h1 className="text-white">No disponible!</h1>
-            <button className="btn btn-danger border"> 4 MATIC</button>
+            <h2 className="nivelNumber">3</h2>
+            <h3 className="text-white">Completa el nivel 2 para acceder al nivel 3</h3>
+            <h1 className="text-white">X1.9</h1>
+            <button className="btn btn-danger border" onClick={() => deposit(wallet,"20000000000000000",3)}>Stake 6.12 MATIC</button>
           </div>
-        </div>
-        <div className="col-12 line col-sm-4 p-4 bg-danger d-flex justify-content-center align-items-center">
-          <div>
-            <h1 className="text-white">No disponible!</h1>
-            <button className="btn btn-danger border"> 8 MATIC</button>
-          </div>
+          <Turno turno={turno3} />
         </div>
       </div>
-      {/* 
-      wallet: {wallet}
-      <div>
-        BNB: {bnb && web3.utils.fromWei(bnb, "ether")}
-      </div>
-      <div>
-        contract address:
-        {binanceContract.address}
-      </div>
-      <div>
-        {!loading && wallet && <button onClick={()=>deposit(wallet)}> Stake 2 MATIC</button>}
-      </div> */}
-    </div>
+      {loading && <Loder />}
+    </div >
   )
 }
 export default App;

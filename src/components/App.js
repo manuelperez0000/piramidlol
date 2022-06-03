@@ -3,12 +3,12 @@ import Web3 from 'web3'
 import startApp from '../services/start'
 import binanceContract from '../contracts/binanceContract'
 const web3 = new Web3(window.ethereum)
-const contract = new web3.eth.Contract(binanceContract.abi,binanceContract.address)
+const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.address)
 function App() {
 
   const [bnb, setBnb] = useState(false)
   const [wallet, setWallet] = useState(false)
-  const [loading,setLoading] = useState(true)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     start()
@@ -17,7 +17,7 @@ function App() {
   const start = () => {
     getWallet()
   }
-  
+
   const getWallet = async () => {
     setLoading(true)
     const _wallet = await startApp.getWallet()
@@ -27,7 +27,7 @@ function App() {
     setLoading(false)
   }
 
-  const getContract = ()=>{
+  const getContract = () => {
     console.log(contract.methods)
   }
 
@@ -37,15 +37,25 @@ function App() {
   }
 
   const deposit = async (wallet) => {
-    const from = wallet
-    const value = "20000000000000000"
-    contract.methods.depsit().send({value,from}).then(res => {
-      console.log(res) 
+    contract.methods.depsit().send({ value: "20000000000000000", from: wallet }).then(res => {
+      console.log(res)
     }).catch(err => console.log(err))
   }
 
   return (
-    <div>
+    <div className="container-fluid bg-dark text-center">
+      <div className="row">
+        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
+          <button className="btn btn-danger border"> 2 MATIC</button>
+        </div>
+        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
+          <button> 2 MATIC </button>
+        </div>
+        <div className="col-4 h-100vh bg-danger d-flex justify-content-center align-items-center">
+          <button> 2 MATIC </button>
+        </div>
+      </div>
+      {/* 
       wallet: {wallet}
       <div>
         BNB: {bnb && web3.utils.fromWei(bnb, "ether")}
@@ -55,8 +65,8 @@ function App() {
         {binanceContract.address}
       </div>
       <div>
-        {!loading && wallet && <button onClick={()=>deposit(wallet)}> Stake </button>}
-      </div>
+        {!loading && wallet && <button onClick={()=>deposit(wallet)}> Stake 2 MATIC</button>}
+      </div> */}
     </div>
   )
 }

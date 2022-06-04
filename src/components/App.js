@@ -12,7 +12,7 @@ const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.addr
 function App() {
 
   const [wallet, setWallet] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const [turno1, setTurno1] = useState(true)
   const [turno2, setTurno2] = useState(true)
   const [turno3, setTurno3] = useState(true)
@@ -36,7 +36,7 @@ function App() {
 
   const getWallet = async () => {
 
-    setLoading(true)
+    // setLoading(true)
     try {
       const _wallet = await startApp.getWallet()
       setWallet(_wallet)
@@ -54,9 +54,6 @@ function App() {
       const _id1 = await contract.methods.getId1(_wallet).call()
       const _id2 = await contract.methods.getId2(_wallet).call()
       const _id3 = await contract.methods.getId3(_wallet).call()
-      /*  setId1(_id1)
-       setId2(_id2)
-       setId3(_id3) */
       console.log([_id1, _id2, _id3])
       return [_id1, _id2, _id3]
     } catch (error) {
@@ -95,8 +92,8 @@ function App() {
     setLoading(true)
     if (nivel == 1) {
       contract.methods.depsit1().send({ value, from: wallet }).then(res => {
-        localStorage.setItem('piramidId1', res.events.deposit.returnValues.id);
         getWallet()
+        alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
         setLoading(false)
       })
@@ -104,8 +101,8 @@ function App() {
 
     if (nivel == 2) {
       contract.methods.depsit2().send({ value, from: wallet }).then(res => {
-        localStorage.setItem('piramidId2', res.events.deposit.returnValues.id);
         getWallet()
+        alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
         setLoading(false)
       })
@@ -113,7 +110,8 @@ function App() {
 
     if (nivel == 3) {
       contract.methods.depsit3().send({ value, from: wallet }).then(res => {
-        localStorage.setItem('piramidId3', res.events.deposit.returnValues.id);
+        getWallet()
+        alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
         setLoading(false)
       })
@@ -141,46 +139,57 @@ function App() {
 
   }
 
+  const resumeWallet = (wallet) => wallet.substr(wallet.length - 4, 4);
+
   return (
     <div className="container-fluid px-5 text-center">
-      
-      <div className="wallet text-white">
-        {wallet ? wallet : <button onClick={getWallet}> Connect wallet </button>}
-      </div>
-      <div className="redes">
-        <img src={bsc} alt="" />
-        <img src={discord} alt="" />
+      <div className="row">
+        <div className="redes col-12">
+          <div>
+            <a href="https://discord.gg/dCDFs3XjRK" target="_blank">
+              <img src={discord} alt="" />
+            </a>
+            <a href="https://bscscan.com/token/0x1479a9B089C7460DaFe2bC2d691E585c94d7623A" target="_blank">
+              <img src={bsc} alt="" />
+            </a>
+          </div>
+          <div>
+            <button className="btn btn-warning mx-2"> whitepaper </button>
+            {wallet ? <>{resumeWallet(wallet)}</> : <button className="btn btn-success" onClick={getWallet}>
+
+              Connect wallet
+            </button>}
+          </div>
+
+        </div>
       </div>
       <div className="row">
 
-        <div className="col-12 pt-5">
+        <div className="col-12 pt-2">
           <div>
             <img src={logo} alt="" />
           </div>
-          <div>
-            <button className="btn btn-warning mt-4 mx-3"> whitepaper </button>
-            <button className="btn btn-warning mt-4 mx-3"> Connectar wallet </button>
-          </div>
+
         </div>
 
-         {permisions && permisions >= 0 ? 
+        {permisions && permisions >= 0 ?
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="ddd">1</h2>
               {coversId1 && <>Blocks: {coversId1}</>}
               <h3 className="text-white mt-2">X1.7</h3>
-              {!loading && wallet ? <button className="btn btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br/> 2 MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+              {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
               <Turno turno={turno1} />
             </div>
           </div>
-           : 
+          :
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-danger h-100">
               <h2 className="">1</h2>
               {coversId1 && <>Blocks: {coversId1}</>}
               <p className="text-white">No disponible!</p>
               <h3 className="text-white mt-2">X1.7</h3>
-              {!loading && wallet ? <button className="btn btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br/> 2 MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
+              {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno1} />
             </div>
           </div>
@@ -194,7 +203,7 @@ function App() {
               {permisions && permisions < 1 &&
                 <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>}
               <h3 className="text-white mt-2">X1.8</h3>
-              {!loading && wallet ? <button className="btn btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br/> 3.4 MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
+              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
             </div>
           </div>
@@ -205,13 +214,13 @@ function App() {
               {coversId2 && <>Blocks: {coversId2}</>}
               <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>
               <h3 className="text-white mt-2">X1.8</h3>
-              {!loading && wallet ? <button className="btn btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br/> 3.4 MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
+              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
             </div>
           </div>
-        } 
+        }
 
-         {permisions && permisions >= 2 ?
+        {permisions && permisions >= 2 ?
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="">3</h2>
@@ -219,7 +228,7 @@ function App() {
               {permisions && permisions < 2 &&
                 <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>}
               <h3 className="text-white mt-2">X1.9</h3>
-              {!loading && wallet ? <button className="btn btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br/> 6.12 MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
+              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
             </div>
           </div>
@@ -230,11 +239,11 @@ function App() {
               {coversId3 && <>Blocks: {coversId3}</>}
               <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>
               <h3 className="text-white mt-2">X1.9</h3>
-              {!loading && wallet ? <button className="btn btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br/> 6.12 MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
+              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
             </div>
           </div>
-        } 
+        }
       </div>
       {loading && <Loder />}
     </div >

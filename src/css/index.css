@@ -16,12 +16,14 @@ div{
   border-radius:18px;  
   padding: 10px;
 }
-button{
+.btn{
   border: 3px dashed rgb(255, 255, 255) !important;
-  background-color: rgba(0, 0, 0, 0.25) !important;
-  transition:0.4s;
 }
-button:hover{
+.btn1{
+  transition:0.4s;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+}
+.btn1:hover{
   background-color: rgba(0, 0, 0, 0.4) !important;
   box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
   transform: scale(1.02);
@@ -68,10 +70,15 @@ p{
 
 .redes{
   display: flex;
-  position: fixed;
-  top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding-top:10px;
+  padding-bottom: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.226);
 }
 .redes img{
-  height: 60px;
-  margin-right: 20px;
+  height: 40px;
+  margin: 0px 10px;
 }

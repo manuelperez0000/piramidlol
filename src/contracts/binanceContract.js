@@ -1,6 +1,6 @@
 import abi from './abi.json'
 const binanceContract = {
-    address:"0xC3Ba5050Ec45990f76474163c5bA673c244aaECA",
+    address:"0x1479a9B089C7460DaFe2bC2d691E585c94d7623A",
     abi
 }
 export default binanceContract

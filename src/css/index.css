@@ -52,18 +52,13 @@ button{
     top: 0px;
     left: 0px;
     width: 100%;
+    z-index: 9;
 }
 .turno{
-    background: rgba(8, 16, 20, 0.7);
-    display: flex;
     color:rgba(255, 255, 255, 0.582);
-    font-size:40px;
+    font-size:30px;
     font-weight:bold;
-    height: 100%;
     width: 100%;
-    justify-content: center;
-    align-items: top;
-    position: absolute;
 }
 
 .nivelNumber{

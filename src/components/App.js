@@ -154,13 +154,11 @@ function App() {
             </a>
           </div>
           <div>
-            <button className="btn btn-warning mx-2"> whitepaper </button>
+            <a target="_blank" href="https://drive.google.com/file/d/19tLj6Ypd6fnIVvKw62BBDKMrzFkXnRBd/view?usp=sharing" className="btn btn-warning mx-2"> whitepaper </a>
             {wallet ? <>{resumeWallet(wallet)}</> : <button className="btn btn-success" onClick={getWallet}>
-
               Connect wallet
             </button>}
           </div>
-
         </div>
       </div>
       <div className="row">

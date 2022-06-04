@@ -149,7 +149,7 @@ function App() {
             <a href="https://discord.gg/dCDFs3XjRK" target="_blank">
               <img src={discord} alt="" />
             </a>
-            <a href="https://bscscan.com/token/0x1479a9B089C7460DaFe2bC2d691E585c94d7623A" target="_blank">
+            <a href="https://testnet.bscscan.com/address/0x1479a9B089C7460DaFe2bC2d691E585c94d7623A#readContract" target="_blank">
               <img src={bsc} alt="" />
             </a>
           </div>

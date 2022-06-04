@@ -12,7 +12,7 @@ const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.addr
 function App() {
 
   const [wallet, setWallet] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [turno1, setTurno1] = useState(true)
   const [turno2, setTurno2] = useState(true)
   const [turno3, setTurno3] = useState(true)
@@ -36,7 +36,7 @@ function App() {
 
   const getWallet = async () => {
 
-    // setLoading(true)
+    setLoading(true)
     try {
       const _wallet = await startApp.getWallet()
       setWallet(_wallet)
@@ -167,7 +167,7 @@ function App() {
 
         <div className="col-12 pt-2">
           <div>
-            <img src={logo} alt="" />
+            <img height={"200px"} src={logo} alt="" />
           </div>
 
         </div>

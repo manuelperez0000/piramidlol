@@ -1,6 +1,6 @@
 const Turno = ({turno}) => {
     return (<>
-        {turno && <div className="turno">
+        {turno && <div className="">
             No es tu turno
         </div>
         }

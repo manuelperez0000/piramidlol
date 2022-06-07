@@ -67,7 +67,9 @@ p{
   width: 100%;
   z-index: 9;
 }
-
+.reguard{
+  font-size:30px;
+}
 .redes{
   display: flex;
   justify-content: space-between;

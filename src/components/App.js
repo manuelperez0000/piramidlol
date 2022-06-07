@@ -20,14 +20,18 @@ function App() {
   const [coversId1, setCoversId1] = useState(false)
   const [coversId2, setCoversId2] = useState(false)
   const [coversId3, setCoversId3] = useState(false)
-  /*   const [id1,setId1] = useState()
-    const [id2,setId2] = useState()
-    const [id3,setId3] = useState() */
+  const [nextToCollect1, setNextToCollect1] = useState(false)
+  const [nextToCollect2, setNextToCollect2] = useState(false)
+  const [nextToCollect3, setNextToCollect3] = useState(false)
+  const [in1, setIn1] = useState(false)
+  const [in2, setIn2] = useState(false)
+  const [in3, setIn3] = useState(false)
+  const [balance, setBalance] = useState(false)
 
   const prices = [
     "20000000000000000",
-    "40000000000000000",
-    "80000000000000000"
+    "34000000000000000",
+    "61200000000000000"
   ]
 
   useEffect(() => {
@@ -38,14 +42,43 @@ function App() {
 
     setLoading(true)
     try {
+      getBalance()
       const _wallet = await startApp.getWallet()
       setWallet(_wallet)
       const _ids = await getIds(_wallet)
+      getInvestors()
       await getCoversId(_ids)
       await getPermisions(_wallet)
       setLoading(false)
     } catch (error) {
       setLoading(false)
+    }
+  }
+
+  const getBalance = async () => {
+    contract.methods.balance().call().then(res => {
+      setBalance(res)
+    }).catch(err => console.log(err))
+  }
+
+  const getInvestors = async () => {
+    try {
+      const nt1 = await contract.methods.nextToCollect1().call()
+      setNextToCollect1(resumeWallet(nt1))
+      const nt2 = await contract.methods.nextToCollect2().call()
+      setNextToCollect2(resumeWallet(nt2))
+      const nt3 = await contract.methods.nextToCollect3().call()
+      setNextToCollect3(resumeWallet(nt3))
+
+      const nt4 = await contract.methods.getInvestor1().call()
+      setIn1(resumeWallet(nt4))
+      console.log(nt4)
+      const nt5 = await contract.methods.getInvestor2().call()
+      setIn2(resumeWallet(nt5))
+      const nt6 = await contract.methods.getInvestor3().call()
+      setIn3(resumeWallet(nt6))
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -91,7 +124,7 @@ function App() {
   const deposit = async (wallet, value, nivel) => {
     setLoading(true)
     if (nivel == 1) {
-      contract.methods.depsit1().send({ value, from: wallet }).then(res => {
+      contract.methods.pool1().send({ value, from: wallet }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -100,7 +133,7 @@ function App() {
     }
 
     if (nivel == 2) {
-      contract.methods.depsit2().send({ value, from: wallet }).then(res => {
+      contract.methods.pool2().send({ value, from: wallet }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -109,7 +142,7 @@ function App() {
     }
 
     if (nivel == 3) {
-      contract.methods.depsit3().send({ value, from: wallet }).then(res => {
+      contract.methods.pool3().send({ value, from: wallet }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -139,7 +172,7 @@ function App() {
 
   }
 
-  const resumeWallet = (wallet) => wallet.substr(wallet.length - 4, 4);
+  const resumeWallet = (wallet) => wallet.substr(wallet.length - 6, 6);
 
   return (
     <div className="container-fluid px-5 text-center">
@@ -161,11 +194,22 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="row">
 
-        <div className="col-12 pt-2">
-          <div>
+      <div className="row " >
+        <div className="col-12 pt-2 d-flex align-items-center justify-content-between">
+          <div className="">
             <img height={"200px"} src={logo} alt="" />
+          </div>
+          <div>
+            Invierte 2 MATIC y gana 11<br />Y si no esta claro, si! es una piramide
+          </div>
+          <div className="balance">
+            <div>
+              Reward Pool
+            </div>
+            <div className="reguard">
+              {balance ? <> {web3.utils.fromWei(balance,"ether") } <br /> MATIC  </> : <>0 <br />MATIC</>}
+            </div>
           </div>
 
         </div>
@@ -174,21 +218,31 @@ function App() {
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="ddd">1</h2>
-              {coversId1 && <>Blocks: {coversId1}</>}
-              <h3 className="text-white mt-2">X1.7</h3>
+              {coversId1 && <>Bloques generados: {coversId1}</>}
+              <h3 className="text-white mt-2">Gana 1.7 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
               <Turno turno={turno1} />
+              <div className="">
+                Proximo a cobrar: <br />
+                {nextToCollect1 && nextToCollect1}<br />
+                {in1 && in1}
+              </div>
             </div>
           </div>
           :
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-danger h-100">
               <h2 className="">1</h2>
-              {coversId1 && <>Blocks: {coversId1}</>}
+              {coversId1 && <>Bloques generados: {coversId1}</>}
               <p className="text-white">No disponible!</p>
-              <h3 className="text-white mt-2">X1.7</h3>
+              <h3 className="text-white mt-2">Gana 1.7 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno1} />
+              <div className="mt-3">
+                Proximo a cobrar: <br />
+                {nextToCollect1 && nextToCollect1}<br />
+                {in1 && in1}
+              </div>
             </div>
           </div>
         }
@@ -197,23 +251,33 @@ function App() {
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="">2</h2>
-              {coversId2 && <>Blocks: {coversId2}</>}
+              {coversId2 && <>Bloques generados: {coversId2}</>}
               {permisions && permisions < 1 &&
                 <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>}
-              <h3 className="text-white mt-2">X1.8</h3>
+              <h3 className="text-white mt-2">Gana 1.8 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
+            <div className="mt-3">
+              Proximo a cobrar: <br />
+              {nextToCollect2 && nextToCollect2}<br />
+              {in2 && in2}
+            </div>
             </div>
           </div>
           :
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-danger h-100">
               <h2 className="">2</h2>
-              {coversId2 && <>Blocks: {coversId2}</>}
+              {coversId2 && <>Bloques generados: {coversId2}</>}
               <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>
-              <h3 className="text-white mt-2">X1.8</h3>
+              <h3 className="text-white mt-2">Gana 1.8 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
+            <div className="mt-3">
+              Proximo a cobrar: <br />
+              {nextToCollect2 && nextToCollect2}<br />
+              {in2 && in2}
+            </div>
             </div>
           </div>
         }
@@ -222,28 +286,43 @@ function App() {
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="">3</h2>
-              {coversId3 && <>Blocks: {coversId3}</>}
+              {coversId3 && <>Bloques generados: {coversId3}</>}
               {permisions && permisions < 2 &&
                 <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>}
-              <h3 className="text-white mt-2">X1.9</h3>
+              <h3 className="text-white mt-2">Gana 1.9 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
+            <div className="mt-3">
+              Proximo a cobrar: <br />
+              {nextToCollect3 && nextToCollect3}<br />
+              {in3 && in3}
+            </div>
             </div>
           </div>
           :
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-danger h-100">
               <h2 className="">3</h2>
-              {coversId3 && <>Blocks: {coversId3}</>}
+              {coversId3 && <>Bloques generados: {coversId3}</>}
               <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>
-              <h3 className="text-white mt-2">X1.9</h3>
+              <h3 className="text-white mt-2">Gana 1.9 X</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
+            <div className="mt-3">
+              Proximo a cobrar: <br />
+              {nextToCollect3 && nextToCollect3}<br />
+              {in3 && in3}
+            </div>
             </div>
           </div>
         }
       </div>
       {loading && <Loder />}
+      <div className="row">
+        <div className="col-12">
+          <div className="mt-5"> All rights reserved © - piramid.lol </div>
+        </div>
+      </div>
     </div >
   )
 }

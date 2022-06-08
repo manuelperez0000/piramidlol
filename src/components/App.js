@@ -231,7 +231,7 @@ function App() {
             <div className="text-white bg-section bg-success h-100">
               <h2 className="ddd">1</h2>
               {coversId1 && <>Bloques generados: {coversId1}</>}
-              <h3 className="text-white mt-2">Gana 1.7 X</h3>
+              <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
               <Turno turno={turno1} />
               <div className="">
@@ -247,7 +247,7 @@ function App() {
               <h2 className="">1</h2>
               {coversId1 && <>Bloques generados: {coversId1}</>}
               <p className="text-white">No disponible!</p>
-              <h3 className="text-white mt-2">Gana 1.7 X</h3>
+              <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno1} />
               <div className="mt-3">
@@ -266,7 +266,7 @@ function App() {
               {coversId2 && <>Bloques generados: {coversId2}</>}
               {permisions && permisions < 1 &&
                 <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>}
-              <h3 className="text-white mt-2">Gana 1.8 X</h3>
+              <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
             <div className="mt-3">
@@ -282,7 +282,7 @@ function App() {
               <h2 className="">2</h2>
               {coversId2 && <>Bloques generados: {coversId2}</>}
               <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>
-              <h3 className="text-white mt-2">Gana 1.8 X</h3>
+              <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
             <div className="mt-3">
@@ -301,7 +301,7 @@ function App() {
               {coversId3 && <>Bloques generados: {coversId3}</>}
               {permisions && permisions < 2 &&
                 <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>}
-              <h3 className="text-white mt-2">Gana 1.9 X</h3>
+              <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
             <div className="mt-3">
@@ -317,7 +317,7 @@ function App() {
               <h2 className="">3</h2>
               {coversId3 && <>Bloques generados: {coversId3}</>}
               <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>
-              <h3 className="text-white mt-2">Gana 1.9 X</h3>
+              <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
             <div className="mt-3">

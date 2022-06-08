@@ -7,29 +7,29 @@ interface Interface {
 
 contract Piramid is Interface {
 
-    address payable comisionsWallet;
     uint internal multiplier = 14;
+    address payable public contractOwner;
 
     constructor () payable {
-        comisionsWallet = payable(msg.sender);
+        contractOwner = payable(msg.sender);
     }
 
     uint public coversId1 = 0;
-    bool public prev1 = false;
+    bool prev1 = false;
     address payable public investor1;
     address payable public nextToCollect1;
     mapping(uint => address payable) public covers1;
     mapping(address => uint) public getId1;
 
     uint public coversId2 = 0;
-    bool public prev2 = false;
+    bool prev2 = false;
     address payable public investor2;
     address payable public nextToCollect2;
     mapping(uint => address payable) public covers2;
     mapping(address => uint) public getId2;
 
     uint public coversId3 = 0;
-    bool public prev3 = false;
+    bool prev3 = false;
     address payable public investor3;
     address payable public nextToCollect3;
     mapping(uint => address payable) public covers3;
@@ -37,22 +37,21 @@ contract Piramid is Interface {
 
     mapping(address => uint8) public permisions;
 
-    uint public price1 =   200*10**multiplier;
-    uint public reguard1 = 340*10**multiplier;
-    uint public comision1 = price1*2-reguard1;
+    uint  price1 =   200*10**multiplier;
+    uint  reguard1 = 340*10**multiplier;
+    uint  comision1 = price1*2-reguard1;
 
-    uint public price2 =   340*10**multiplier;
-    uint public reguard2 = 612*10**multiplier;
-    uint public comision2 = price2*2-reguard2;
+    uint  price2 =   340*10**multiplier;
+    uint  reguard2 = 612*10**multiplier;
+    uint  comision2 = price2*2-reguard2;
 
-    uint public price3 =   612*10**multiplier;
-    uint public reguard3 = 116*10**multiplier;
-    uint public comision3 = price3*2-reguard3;
+    uint  price3 =   612*10**multiplier;
+    uint  reguard3 = 116*10**multiplier;
+    uint  comision3 = price3*2-reguard3;
 
     function pool1() public payable returns(bool){
         require(msg.value == price1,"Invalid amount to deposit");
         if(prev1 == false && coversId1 == 0){
-            comisionsWallet.transfer(msg.value);
             coversId1 = 1;
             covers1[1] = payable(msg.sender);
             getId1[msg.sender] = coversId1+1;
@@ -64,7 +63,6 @@ contract Piramid is Interface {
                 getId1[msg.sender] = coversId1+1;
             }else{
                 covers1[coversId1].transfer(reguard1); 
-                comisionsWallet.transfer(comision1);
                 nextToCollect1 = investor1;
                 investor1 = payable(msg.sender);
                 prev1 = false;
@@ -84,7 +82,6 @@ contract Piramid is Interface {
         require(permisions[msg.sender] > 0,"You don heve permisions");
         require(msg.value == price2,"Invalid amount to deposit");
         if(prev2 == false && coversId2 == 0){
-           comisionsWallet.transfer(msg.value);
             coversId2 = 1;
             covers2[1] = payable(msg.sender);
             nextToCollect2 = payable(msg.sender);
@@ -97,7 +94,6 @@ contract Piramid is Interface {
                 getId2[msg.sender] = coversId2+1;
             }else{
                 covers2[coversId2].transfer(reguard2); 
-                comisionsWallet.transfer(comision2);
                 nextToCollect2 = investor2;
                 investor2 = payable(msg.sender);
                 prev2 = false;
@@ -117,7 +113,6 @@ contract Piramid is Interface {
         require(permisions[msg.sender] > 1,"You don heve permisions");
         require(msg.value == price3,"Invalid amount to deposit");
         if(prev3 == false && coversId3 == 0){
-            comisionsWallet.transfer(msg.value);
             coversId3 = 1;
             covers3[1] = payable(msg.sender);
             nextToCollect3 = payable(msg.sender);
@@ -130,7 +125,6 @@ contract Piramid is Interface {
                 getId3[msg.sender] = coversId3+1;
             }else{
                 covers3[coversId3].transfer(reguard3); 
-                comisionsWallet.transfer(comision3);
                 nextToCollect3 = investor3;
                 investor3 = payable(msg.sender);
                 prev3 = false;
@@ -144,4 +138,45 @@ contract Piramid is Interface {
         emit deposit(id);
         return true;
     }
+
+    function getInvestor1() public view returns (address){
+        return investor1;
+    }
+
+    function getInvestor2() public view returns (address){
+        return investor2;
+    }
+
+    function getInvestor3() public view returns (address){
+        return investor3;
+    }
+
+    modifier onlyOwner() {
+        require(msg.sender == contractOwner, "Not owner");
+        _;
+    }
+
+    function withdraw(uint amount) public onlyOwner returns(bool){
+        require(msg.sender == contractOwner, "Not owner");
+        (bool success,) = contractOwner.call{value: amount}("");
+        require(success, "Failed to send Ether");
+        return true;
+    }
+
+    function renounceOwner() public onlyOwner returns(bool){
+        require(msg.sender == contractOwner, "Not owner");
+        contractOwner = payable(address(0));
+        return true;
+    }
+
+    function balance() public view returns(uint){
+        return address(this).balance;
+    }
+
+    function changeOwner (address newOwner) public onlyOwner returns(bool){
+        require(msg.sender == contractOwner, "Not owner");
+        contractOwner = payable(newOwner);
+        return true;
+    }
+
 }

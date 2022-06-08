@@ -5,7 +5,7 @@ import binanceContract from '../contracts/binanceContract'
 import Loder from "./loader/loader"
 import Turno from "./turno/turno"
 import logo from '../img/logo-piramid.png'
-import bsc from '../img/bsc.png'
+import polygon from '../img/polygon.png'
 import discord from '../img/discord.png'
 const web3 = new Web3(window.ethereum)
 const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.address)
@@ -35,8 +35,19 @@ function App() {
   ]
 
   useEffect(() => {
-    getWallet()
+    comproveChain()
   }, [])
+  
+  const comproveChain = async ()=>{
+    const chainId = web3.utils.toHex("137")
+    const id = await window.ethereum.request({ method: 'eth_chainId' })
+    if(id == chainId){
+      getWallet()
+    }else{
+      window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
+    }
+
+  }
 
   const getWallet = async () => {
 
@@ -47,7 +58,7 @@ function App() {
       setWallet(_wallet)
       const _ids = await getIds(_wallet)
       getInvestors()
-      await getCoversId(_ids)
+      getCoversId(_ids)
       await getPermisions(_wallet)
       setLoading(false)
     } catch (error) {
@@ -72,7 +83,7 @@ function App() {
 
       const nt4 = await contract.methods.getInvestor1().call()
       setIn1(resumeWallet(nt4))
-      console.log(nt4)
+      /* console.log(nt4) */
       const nt5 = await contract.methods.getInvestor2().call()
       setIn2(resumeWallet(nt5))
       const nt6 = await contract.methods.getInvestor3().call()
@@ -87,7 +98,7 @@ function App() {
       const _id1 = await contract.methods.getId1(_wallet).call()
       const _id2 = await contract.methods.getId2(_wallet).call()
       const _id3 = await contract.methods.getId3(_wallet).call()
-      console.log([_id1, _id2, _id3])
+  /*     console.log([_id1, _id2, _id3]) */
       return [_id1, _id2, _id3]
     } catch (error) {
       alert(error.message)
@@ -182,8 +193,8 @@ function App() {
             <a href="https://discord.gg/dCDFs3XjRK" target="_blank">
               <img src={discord} alt="" />
             </a>
-            <a href="https://testnet.bscscan.com/address/0x1479a9B089C7460DaFe2bC2d691E585c94d7623A#readContract" target="_blank">
-              <img src={bsc} alt="" />
+            <a href="https://polygonscan.com/address/0x4416De024D601F0597d72edd39F62bBF737aF054#readContract" target="_blank">
+              <img src={polygon} alt="" />
             </a>
           </div>
           <div>
@@ -198,14 +209,15 @@ function App() {
       <div className="row " >
         <div className="col-12 pt-2 d-flex align-items-center justify-content-between">
           <div className="">
-            <img height={"200px"} src={logo} alt="" />
+            <img height={"200px"} src={logo} alt="" />v1.0
           </div>
           <div>
+            <h4>Trabajamos en la red de polygon</h4>
             Invierte 2 MATIC y gana 11<br />Y si no esta claro, si! es una piramide
           </div>
           <div className="balance">
             <div>
-              Reward Pool
+              Balance de Recompensas
             </div>
             <div className="reguard">
               {balance ? <> {web3.utils.fromWei(balance,"ether") } <br /> MATIC  </> : <>0 <br />MATIC</>}
@@ -320,7 +332,7 @@ function App() {
       {loading && <Loder />}
       <div className="row">
         <div className="col-12">
-          <div className="mt-5"> All rights reserved © - piramid.lol </div>
+          <div className="mt-5"> Todos los derechos reservados © - piramid.lol </div>
         </div>
       </div>
     </div >

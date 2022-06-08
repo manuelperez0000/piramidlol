@@ -20,32 +20,12 @@
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <script>
     
-    const chainId = "0x61"
+    const chainId = "137"
     
     window.ethereum.on('accountsChanged', async _ => {
       console.log("useted a cambiado de cuenta")
       location.reload()
     })
-    
-    /* window.ethereum.on('chainChanged', async _ => {
-      console.log("useted a cambiado de red")
-      let id = await window.ethereum.request({ method: 'eth_chainId' })
-      console.log(id)
-      if (id != chainId) {
-        window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
-      }
-      location.reload()
-    }) */
-    
-    /* async function getChain(chainId) {
-      let id = await window.ethereum.request({ method: 'eth_chainId' })
-      /* alert(id)
-      if (id != chainId) {
-        window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
-      }
-  
-    }
-    getChain() */
     
     </script>
     <div id="root"></div>

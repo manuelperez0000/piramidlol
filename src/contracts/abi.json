@@ -1,18 +1,5 @@
 [
 	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			}
-		],
-		"name": "deposit",
-		"type": "event"
-	},
-	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -59,6 +46,24 @@
 	},
 	{
 		"inputs": [],
+		"stateMutability": "payable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "deposit",
+		"type": "event"
+	},
+	{
+		"inputs": [],
 		"name": "pool3",
 		"outputs": [
 			{
@@ -101,11 +106,6 @@
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "payable",
-		"type": "constructor"
 	},
 	{
 		"inputs": [],
@@ -301,7 +301,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getInvestor1",
+		"name": "getNnextToCollect1",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -314,7 +314,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getInvestor2",
+		"name": "getNnextToCollect1b",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -327,7 +327,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getInvestor3",
+		"name": "getNnextToCollect1c",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -340,10 +340,10 @@
 	},
 	{
 		"inputs": [],
-		"name": "investor1",
+		"name": "getNnextToCollect2",
 		"outputs": [
 			{
-				"internalType": "address payable",
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -353,10 +353,10 @@
 	},
 	{
 		"inputs": [],
-		"name": "investor2",
+		"name": "getNnextToCollect2b",
 		"outputs": [
 			{
-				"internalType": "address payable",
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -366,12 +366,51 @@
 	},
 	{
 		"inputs": [],
-		"name": "investor3",
+		"name": "getNnextToCollect2c",
 		"outputs": [
 			{
-				"internalType": "address payable",
+				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "investorId1",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "investorId2",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "investorId3",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -380,6 +419,32 @@
 	{
 		"inputs": [],
 		"name": "nextToCollect1",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "nextToCollect1b",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "nextToCollect1c",
 		"outputs": [
 			{
 				"internalType": "address payable",
@@ -405,7 +470,20 @@
 	},
 	{
 		"inputs": [],
-		"name": "nextToCollect3",
+		"name": "nextToCollect2b",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "nextToCollect2c",
 		"outputs": [
 			{
 				"internalType": "address payable",

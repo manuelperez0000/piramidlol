@@ -27,6 +27,8 @@ function App() {
   const [in2, setIn2] = useState(false)
   const [in3, setIn3] = useState(false)
   const [balance, setBalance] = useState(false)
+  const gas = "150000"
+  const [gasPrice, setGasPrice] = useState("31000000000")
 
   const prices = [
     "2000000000000000000",
@@ -37,20 +39,25 @@ function App() {
   useEffect(() => {
     comproveChain()
   }, [])
-  
-  const comproveChain = async ()=>{
-    const chainId = web3.utils.toHex("137")
-    const id = await window.ethereum.request({ method: 'eth_chainId' })
-    if(id == chainId){
-      getWallet()
-    }else{
-      window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
+
+  const comproveChain = async () => {
+    if (window.ethereum) {
+      const chainId = web3.utils.toHex("137")
+      const id = await window.ethereum.request({ method: 'eth_chainId' })
+      if (id == chainId) {
+        getWallet()
+      } else {
+        window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] })
+      }
+    } else {
+      alert("Para usar esta aplicacion debe instalar metamas y configurar la red de polygon")
+      setLoading(false)
     }
 
   }
 
   const getWallet = async () => {
-
+    getGasPrice()
     setLoading(true)
     try {
       getBalance()
@@ -66,6 +73,11 @@ function App() {
     }
   }
 
+  const getGasPrice = async () =>{
+    const _gasPrice = await web3.eth.getGasPrice()
+    setGasPrice(_gasPrice)
+  }
+
   const getBalance = async () => {
     contract.methods.balance().call().then(res => {
       setBalance(res)
@@ -74,19 +86,21 @@ function App() {
 
   const getInvestors = async () => {
     try {
+
+
       const nt1 = await contract.methods.nextToCollect1().call()
       setNextToCollect1(resumeWallet(nt1))
-      const nt2 = await contract.methods.nextToCollect2().call()
-      setNextToCollect2(resumeWallet(nt2))
-      const nt3 = await contract.methods.nextToCollect3().call()
-      setNextToCollect3(resumeWallet(nt3))
-
-      const nt4 = await contract.methods.getInvestor1().call()
+      const nt4 = await contract.methods.nextToCollect2().call()
       setIn1(resumeWallet(nt4))
-      /* console.log(nt4) */
-      const nt5 = await contract.methods.getInvestor2().call()
+
+      const nt2 = await contract.methods.nextToCollect1b().call()
+      setNextToCollect2(resumeWallet(nt2))
+      const nt5 = await contract.methods.nextToCollect2b().call()
       setIn2(resumeWallet(nt5))
-      const nt6 = await contract.methods.getInvestor3().call()
+
+      const nt3 = await contract.methods.nextToCollect1c().call()
+      setNextToCollect3(resumeWallet(nt3))
+      const nt6 = await contract.methods.nextToCollect2c().call()
       setIn3(resumeWallet(nt6))
     } catch (error) {
       console.log(error)
@@ -98,7 +112,7 @@ function App() {
       const _id1 = await contract.methods.getId1(_wallet).call()
       const _id2 = await contract.methods.getId2(_wallet).call()
       const _id3 = await contract.methods.getId3(_wallet).call()
-  /*     console.log([_id1, _id2, _id3]) */
+      /*     console.log([_id1, _id2, _id3]) */
       return [_id1, _id2, _id3]
     } catch (error) {
       alert(error.message)
@@ -114,9 +128,7 @@ function App() {
       setCoversId2(c2)
       const c3 = await contract.methods.coversId3().call()
       setCoversId3(c3)
-
       getStorage(c1, c2, c3, _ids)
-
     } catch (error) {
       console.error(error)
     }
@@ -135,7 +147,7 @@ function App() {
   const deposit = async (wallet, value, nivel) => {
     setLoading(true)
     if (nivel == 1) {
-      contract.methods.pool1().send({ value, from: wallet }).then(res => {
+      contract.methods.pool1().send({ value, from: wallet, gas, gasPrice }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -144,7 +156,7 @@ function App() {
     }
 
     if (nivel == 2) {
-      contract.methods.pool2().send({ value, from: wallet }).then(res => {
+      contract.methods.pool2().send({ value, from: wallet, gas, gasPrice }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -153,7 +165,7 @@ function App() {
     }
 
     if (nivel == 3) {
-      contract.methods.pool3().send({ value, from: wallet }).then(res => {
+      contract.methods.pool3().send({ value, from: wallet, gas, gasPrice }).then(res => {
         getWallet()
         alert("Felicitaciones! ahora solo debes esperar que ingresen algunos mas")
       }).catch(err => console.log(err)).finally(() => {
@@ -193,13 +205,13 @@ function App() {
             <a href="https://discord.gg/dCDFs3XjRK" target="_blank">
               <img src={discord} alt="" />
             </a>
-            <a href="https://polygonscan.com/address/0x9fB9D55d06fC7FC91162b8165727C3616523786E" target="_blank">
+            <a href={"https://polygonscan.com/address/" + binanceContract.address} target="_blank">
               <img src={polygon} alt="" />
             </a>
           </div>
           <div>
             <a target="_blank" href="https://drive.google.com/file/d/19tLj6Ypd6fnIVvKw62BBDKMrzFkXnRBd/view?usp=sharing" className="btn btn-warning mx-2"> whitepaper </a>
-            {wallet ? <>{resumeWallet(wallet)}</> : <button className="btn btn-success" onClick={getWallet}>
+            {wallet ? <>{resumeWallet(wallet)}</> : <button className="btn btn-success" onClick={comproveChain}>
               Connect wallet
             </button>}
           </div>
@@ -209,7 +221,7 @@ function App() {
       <div className="row " >
         <div className="col-12 pt-2 d-flex align-items-center justify-content-between">
           <div className="">
-            <img height={"200px"} src={logo} alt="" />v1.0
+            <img height={"200px"} src={logo} alt="" />v2.0
           </div>
           <div>
             <h4>Trabajamos en la red de polygon</h4>
@@ -220,7 +232,7 @@ function App() {
               Balance de Recompensas
             </div>
             <div className="reguard">
-              {balance ? <> {web3.utils.fromWei(balance,"ether") } <br /> MATIC  </> : <>0 <br />MATIC</>}
+              {balance ? <> {web3.utils.fromWei(balance, "ether")} <br /> MATIC  </> : <>0 <br />MATIC</>}
             </div>
           </div>
 
@@ -269,11 +281,11 @@ function App() {
               <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
-            <div className="mt-3">
-              Proximo a cobrar: <br />
-              {nextToCollect2 && nextToCollect2}<br />
-              {in2 && in2}
-            </div>
+              <div className="mt-3">
+                Proximo a cobrar: <br />
+                {nextToCollect2 && nextToCollect2}<br />
+                {in2 && in2}
+              </div>
             </div>
           </div>
           :
@@ -285,11 +297,11 @@ function App() {
               <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
               <Turno turno={turno2} />
-            <div className="mt-3">
-              Proximo a cobrar: <br />
-              {nextToCollect2 && nextToCollect2}<br />
-              {in2 && in2}
-            </div>
+              <div className="mt-3">
+                Proximo a cobrar: <br />
+                {nextToCollect2 && nextToCollect2}<br />
+                {in2 && in2}
+              </div>
             </div>
           </div>
         }
@@ -304,11 +316,11 @@ function App() {
               <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
-            <div className="mt-3">
-              Proximo a cobrar: <br />
-              {nextToCollect3 && nextToCollect3}<br />
-              {in3 && in3}
-            </div>
+              <div className="mt-3">
+                Proximo a cobrar: <br />
+                {nextToCollect3 && nextToCollect3}<br />
+                {in3 && in3}
+              </div>
             </div>
           </div>
           :
@@ -320,11 +332,11 @@ function App() {
               <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
               <Turno turno={turno3} />
-            <div className="mt-3">
-              Proximo a cobrar: <br />
-              {nextToCollect3 && nextToCollect3}<br />
-              {in3 && in3}
-            </div>
+              <div className="mt-3">
+                Proximo a cobrar: <br />
+                {nextToCollect3 && nextToCollect3}<br />
+                {in3 && in3}
+              </div>
             </div>
           </div>
         }

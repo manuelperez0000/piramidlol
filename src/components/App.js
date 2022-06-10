@@ -27,8 +27,8 @@ function App() {
   const [in2, setIn2] = useState(false)
   const [in3, setIn3] = useState(false)
   const [balance, setBalance] = useState(false)
-  const gas = "150000"
-  const [gasPrice, setGasPrice] = useState("31000000000")
+  const gas = "170000"
+  const [gasPrice, setGasPrice] = useState("35000000000")
 
   const prices = [
     "2000000000000000000",

@@ -271,15 +271,15 @@ function App() {
             <div>
               <form action="" onSubmit={e => getId(e, 1)}>
                 <span>Consulta tu puesto de cobro</span>
-                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
-                <button> Consultar Puesto </button>
+                <input className='w-100' name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button className='mt-2'> Consultar Puesto </button>
               </form>
             </div>
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 1)}>
-              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
-              <button> Consultar </button>
+                <input className='w-100' name="wallet2" type="number" max="9999" placeholder="Intruduce el n° de bloque" />
+                <button className='mt-2'> Consultar </button>
             </form>
             <hr />
             <div className="">
@@ -303,15 +303,15 @@ function App() {
             <div>
               <form action="" onSubmit={e => getId(e, 2)}>
                 <span>Consulta tu puesto de cobro</span>
-                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
-                <button> Consultar Puesto </button>
+                <input className='w-100' name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button className='mt-2'> Consultar Puesto </button>
               </form>
             </div>
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 2)}>
-              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
-              <button> Consultar </button>
+              <input className='w-100' name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
+              <button className='mt-2'> Consultar </button>
             </form>
             <hr />
             <div className="">
@@ -334,15 +334,15 @@ function App() {
             <div>
               <form action="" onSubmit={e => getId(e, 3)}>
                 <span>Consulta tu puesto de cobro</span>
-                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
-                <button> Consultar Puesto </button>
+                <input className="w-100" name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button className="mt-2"> Consultar Puesto </button>
               </form>
             </div>
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 3)}>
-              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
-              <button> Consultar </button>
+              <input className='w-100' name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
+              <button className='mt-2'> Consultar </button>
             </form>
             <hr />
             <div className="">
@@ -352,158 +352,6 @@ function App() {
             </div>
           </div>
         </div>
-
-        {/*  <div className="col-12 col-sm-6 p-4">
-          <div className="text-white bg-section h-100" style={bgSection1}>
-            <h2 className="ddd">2</h2>
-            {coversId2 && <>Bloques pagados: {coversId2}</>}<br></br>
-            {investorId2 && <>Generados: {investorId2}</>}
-            <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
-            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[1], 2)}> Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
-            <hr />
-            <div>
-              <span>Consulta tu puesto</span>
-              <input type="text" placeholder="Intruduce tu wallet" />
-              <button> Consultar Puesto </button>
-            </div>
-            <hr />
-            <span>Consulta quien viene a cobrar</span>
-            <input type="text" placeholder="Intruduce un numero de bloque" />
-            <button> Consultar </button>
-            <hr />
-            <div className="">
-              Proximo a cobrar: <br />
-              {nextToCollect1 && nextToCollect1}<br />
-              {in1 && in1}
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6 p-4">
-          <div className="text-white bg-section h-100" style={bgSection1}>
-            <h2 className="ddd">3</h2>
-            {coversId1 && <>Bloques pagados: {coversId1}</>}<br></br>
-            {investorId1 && <>Generados: {investorId1}</>}
-            <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
-            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[2], 3)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
-            <hr />
-            <div>
-              <span>Consulta tu puesto</span>
-              <input type="text" placeholder="Intruduce tu wallet" />
-              <button> Consultar Puesto </button>
-            </div>
-            <hr />
-            <span>Consulta quien viene a cobrar</span>
-            <input type="text" placeholder="Intruduce un numero de bloque" />
-            <button> Consultar </button>
-            <hr />
-            <div className="">
-              Proximo a cobrar: <br />
-              {nextToCollect1 && nextToCollect1}<br />
-              {in1 && in1}
-            </div>
-          </div>
-        </div> */}
-
-        {/* {permisions && permisions >= 0 ?
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-success h-100">
-              <h2 className="ddd">1</h2>
-              {coversId1 && <>Bloques generados: {coversId1}</>}
-              <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
-              <div className="">
-                Proximo a cobrar: <br />
-                {nextToCollect1 && nextToCollect1}<br />
-                {in1 && in1}
-              </div>
-            </div>
-          </div>
-          :
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-danger h-100">
-              <h2 className="">1</h2>
-              {coversId1 && <>Bloques generados: {coversId1}</>}
-              <p className="text-white">No disponible!</p>
-              <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-              <div className="mt-3">
-                Proximo a cobrar: <br />
-                {nextToCollect1 && nextToCollect1}<br />
-                {in1 && in1}
-              </div>
-            </div>
-          </div>
-        } */}
-
-        {/* {permisions && permisions >= 1 ?
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-success h-100">
-              <h2 className="">2</h2>
-              {coversId2 && <>Bloques generados: {coversId2}</>}
-              {permisions && permisions < 1 &&
-                <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>}
-              <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-              <div className="mt-3">
-                Proximo a cobrar: <br />
-                {nextToCollect2 && nextToCollect2}<br />
-                {in2 && in2}
-              </div>
-            </div>
-          </div>
-          :
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-danger h-100">
-              <h2 className="">2</h2>
-              {coversId2 && <>Bloques generados: {coversId2}</>}
-              <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>
-              <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-
-              <div className="mt-3">
-                Proximo a cobrar: <br />
-                {nextToCollect2 && nextToCollect2}<br />
-                {in2 && in2}
-              </div>
-            </div>
-          </div>
-        }
-
-        {permisions && permisions >= 2 ?
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-success h-100">
-              <h2 className="">3</h2>
-              {coversId3 && <>Bloques generados: {coversId3}</>}
-              {permisions && permisions < 2 &&
-                <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>}
-              <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
-
-              <div className="mt-3">
-                Proximo a cobrar: <br />
-                {nextToCollect3 && nextToCollect3}<br />
-                {in3 && in3}
-              </div>
-            </div>
-          </div>
-          :
-          <div className="col-12 col-sm-4 p-4">
-            <div className="text-white bg-section bg-danger h-100">
-              <h2 className="">3</h2>
-              {coversId3 && <>Bloques generados: {coversId3}</>}
-              <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>
-              <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
-              {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 2 primero")}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
-              <Turno turno={turno3} />
-              <div className="mt-3">
-                Proximo a cobrar: <br />
-                {nextToCollect3 && nextToCollect3}<br />
-                {in3 && in3}
-              </div>
-            </div>
-          </div>
-        } */}
       </div>
 
       {loading && <Loder />}

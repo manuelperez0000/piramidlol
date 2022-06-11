@@ -12,12 +12,11 @@ div{
 }
 
 .bg-section{
-  border: 4px dashed rgb(255, 255, 255);
   border-radius:18px;  
   padding: 10px;
 }
 .btn{
-  border: 3px dashed rgb(255, 255, 255) !important;
+  border:1px solid #fff !important;
 }
 .btn1{
   transition:0.4s;

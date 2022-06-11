@@ -4,16 +4,15 @@ import startApp from '../services/start'
 import binanceContract from '../contracts/binanceContract'
 import Loder from "./loader/loader"
 import Turno from "./turno/turno"
-import logo from '../img/logo-piramid.png'
-import polygon from '../img/polygon.png'
-import discord from '../img/discord.png'
+import Header from './header/header'
+import Navbar from "./navbar/navbar"
+import Footer from "./footer/footer"
 const web3 = new Web3(window.ethereum)
 const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.address)
 function App() {
 
   const [wallet, setWallet] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [turno1, setTurno1] = useState(true)
   const [turno2, setTurno2] = useState(true)
   const [turno3, setTurno3] = useState(true)
   const [permisions, setPermisions] = useState(false)
@@ -27,8 +26,15 @@ function App() {
   const [in2, setIn2] = useState(false)
   const [in3, setIn3] = useState(false)
   const [balance, setBalance] = useState(false)
-  const gas = "160000"
-  const [gasPrice, setGasPrice] = useState("32000000000")
+
+  const gas = "170000"
+  const [gasPrice, setGasPrice] = useState("35000000000")
+  const [bgSection1, setBgSection1] = useState({ background: "gray" })
+  const [bgSection2, setBgSection2] = useState({ background: "gray" })
+  const [bgSection3, setBgSection3] = useState({ background: "gray" })
+  const [investorId1, setInvestorId1] = useState(false)
+  const [investorId2, setInvestorId2] = useState(false)
+  const [investorId3, setInvestorId3] = useState(false)
 
   const prices = [
     "2000000000000000000",
@@ -39,6 +45,8 @@ function App() {
   useEffect(() => {
     comproveChain()
   }, [])
+
+  const resumeWallet = (wallet) => wallet.substr(wallet.length - 6, 6);
 
   const comproveChain = async () => {
     if (window.ethereum) {
@@ -73,7 +81,7 @@ function App() {
     }
   }
 
-  const getGasPrice = async () =>{
+  const getGasPrice = async () => {
     const _gasPrice = await web3.eth.getGasPrice()
     setGasPrice(_gasPrice)
   }
@@ -87,6 +95,12 @@ function App() {
   const getInvestors = async () => {
     try {
 
+      const _investorId1 = await contract.methods.investorId1().call()
+      setInvestorId1(_investorId1)
+      const _investorId2 = await contract.methods.investorId2().call()
+      setInvestorId2(_investorId2)
+      const _investorId3 = await contract.methods.investorId3().call()
+      setInvestorId3(_investorId3)
 
       const nt1 = await contract.methods.nextToCollect1().call()
       setNextToCollect1(resumeWallet(nt1))
@@ -128,15 +142,62 @@ function App() {
       setCoversId2(c2)
       const c3 = await contract.methods.coversId3().call()
       setCoversId3(c3)
-      getStorage(c1, c2, c3, _ids)
     } catch (error) {
       console.error(error)
+    }
+  }
+
+  const getId = async (e, _id) => {
+    e.preventDefault()
+    setLoading(true)
+    if (_id == 1) {
+      try {
+        const _id = await contract.methods.getId1(e.target.wallet.value).call()
+        alert("Tu puesto es: " + _id)
+        setLoading(false)
+      } catch (error) {
+        alert("Wallet invalida")
+        setLoading(false)
+      }
+    } else if (_id == 2) {
+      try {
+        const _id = await contract.methods.getId2(e.target.wallet.value).call()
+        alert("Tu puesto es: " + _id)
+        setLoading(false)
+      } catch (error) {
+        alert("Wallet invalida")
+        setLoading(false)
+      }
+    } else if (_id == 3) {
+      try {
+        const _id = await contract.methods.getId3(e.target.wallet.value).call()
+        alert("Tu puesto es: " + _id)
+        setLoading(false)
+      } catch (error) {
+        alert("Wallet invalida")
+        setLoading(false)
+      }
+    } else {
+      alert("El id no es correcto")
     }
   }
 
   const getPermisions = async (_wallet) => {
     try {
       const permis = await contract.methods.permisions(_wallet).call()
+      if (permis == 0) {
+        setBgSection1({ backgroundColor: "#198754" })
+        setBgSection2({ backgroundColor: "red" })
+        setBgSection3({ backgroundColor: "red" })
+      } else if (permis == 1) {
+        setBgSection1({ backgroundColor: "#198754" })
+        setBgSection2({ backgroundColor: "#198754" })
+        setBgSection3({ backgroundColor: "red" })
+      } else if (permis >= 2) {
+        setBgSection1({ backgroundColor: "#198754" })
+        setBgSection2({ backgroundColor: "#198754" })
+        setBgSection3({ backgroundColor: "#198754" })
+      }
       setPermisions(permis)
       return
     } catch (error) {
@@ -174,78 +235,183 @@ function App() {
     }
   }
 
-  const getStorage = (block1, block2, block3, _ids) => {
-    if (block1 > _ids[0] + 1 || block1 == _ids[0]) {
-      setTurno1(false)
-    } else {
-      setTurno1(true)
+  const getWalletFromId = async (e, _id) => {
+    e.preventDefault()
+    if (_id == 1) {
+      const __id = e.target.wallet2.value
+      const _wallet = await contract.methods.covers1(__id).call()
+      alert("En el bloque " + __id + " se encuentra " + _wallet)
+    } else if (_id == 2) {
+      const __id = e.target.wallet2.value
+      const _wallet = await contract.methods.covers2(__id).call()
+      alert("En el bloque " + __id + " se encuentra " + _wallet)
+    } else if (_id == 3) {
+      const __id = e.target.wallet2.value
+      const _wallet = await contract.methods.covers3(__id).call()
+      alert("En el bloque " + __id + " se encuentra " + _wallet)
     }
-    if (block2 > _ids[1] + 2 || block2 == _ids[1]) {
-      setTurno2(false)
-    } else {
-      setTurno2(true)
-
-    }
-    if (block3 > _ids[2] + 2 || block3 == _ids[2]) {
-      setTurno3(false)
-    } else {
-      setTurno3(true)
-
-    }
-
   }
-
-  const resumeWallet = (wallet) => wallet.substr(wallet.length - 6, 6);
 
   return (
     <div className="container-fluid px-5 text-center">
-      <div className="row">
-        <div className="redes col-12">
-          <div>
-            <a href="https://discord.gg/dCDFs3XjRK" target="_blank">
-              <img src={discord} alt="" />
-            </a>
-            <a href={"https://polygonscan.com/address/" + binanceContract.address} target="_blank">
-              <img src={polygon} alt="" />
-            </a>
-          </div>
-          <div>
-            <a target="_blank" href="https://drive.google.com/file/d/19tLj6Ypd6fnIVvKw62BBDKMrzFkXnRBd/view?usp=sharing" className="btn btn-warning mx-2"> whitepaper </a>
-            {wallet ? <>{resumeWallet(wallet)}</> : <button className="btn btn-success" onClick={comproveChain}>
-              Connect wallet
-            </button>}
-          </div>
-        </div>
-      </div>
+
+      <Navbar wallet={wallet} resumeWallet={resumeWallet} comproveChain={comproveChain} />
 
       <div className="row " >
-        <div className="col-12 pt-2 d-flex align-items-center justify-content-between">
-          <div className="">
-            <img height={"200px"} src={logo} alt="" />v2.0
-          </div>
-          <div>
-            <h4>Trabajamos en la red de polygon</h4>
-            Invierte 2 MATIC y gana 11<br />Y si no esta claro, si! es una piramide
-          </div>
-          <div className="balance">
-            <div>
-              Balance de Recompensas
-            </div>
-            <div className="reguard">
-              {balance ? <> {web3.utils.fromWei(balance, "ether")} <br /> MATIC  </> : <>0 <br />MATIC</>}
-            </div>
-          </div>
+        <Header balance={balance} web3={web3} />
 
+        <div className="col-12 col-md-6 p-4">
+          <div className="text-white bg-section h-100" style={bgSection1}>
+            <h2 className="ddd mt-2">Stake 1</h2><hr />
+            {coversId1 && <>Bloques pagados: {coversId1}</>}<br></br>
+            {investorId1 && <>Generados: {investorId1}</>}
+            <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
+            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+            <hr />
+            <div>
+              <form action="" onSubmit={e => getId(e, 1)}>
+                <span>Consulta tu puesto de cobro</span>
+                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button> Consultar Puesto </button>
+              </form>
+            </div>
+            <hr />
+            <span>Consulta quien viene a cobrar</span>
+            <form action="" onSubmit={e => getWalletFromId(e, 1)}>
+              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <button> Consultar </button>
+            </form>
+            <hr />
+            <div className="">
+              Proximo a cobrar: <br />
+              {nextToCollect1 && nextToCollect1}<br />
+              {in1 && in1}
+            </div>
+          </div>
         </div>
 
-        {permisions && permisions >= 0 ?
+        {/***************** 2 ************************** */}
+
+        <div className="col-12 col-md-6 p-4">
+          <div className="text-white bg-section h-100" style={bgSection1}>
+            <h2 className="ddd mt-2">Stake 2</h2><hr />
+            {coversId2 && <>Bloques pagados: {coversId2}</>}<br></br>
+            {investorId2 && <>Generados: {investorId2}</>}
+            <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
+            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[1], 2)}> Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+            <hr />
+            <div>
+              <form action="" onSubmit={e => getId(e, 2)}>
+                <span>Consulta tu puesto de cobro</span>
+                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button> Consultar Puesto </button>
+              </form>
+            </div>
+            <hr />
+            <span>Consulta quien viene a cobrar</span>
+            <form action="" onSubmit={e => getWalletFromId(e, 2)}>
+              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <button> Consultar </button>
+            </form>
+            <hr />
+            <div className="">
+              Proximo a cobrar: <br />
+              {nextToCollect2 && nextToCollect2}<br />
+              {in2 && in2}
+            </div>
+          </div>
+        </div>
+        {/***************** 3 ************************** */}
+
+        <div className="col-12 col-md-6 p-4">
+          <div className="text-white bg-section h-100" style={bgSection1}>
+            <h2 className="ddd mt-2">Stake 3</h2><hr />
+            {coversId3 && <>Bloques pagados: {coversId3}</>}<br></br>
+            {investorId3 && <>Generados: {investorId3}</>}
+            <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
+            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[2], 3)}> Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+            <hr />
+            <div>
+              <form action="" onSubmit={e => getId(e, 3)}>
+                <span>Consulta tu puesto de cobro</span>
+                <input name="wallet" type="text" placeholder="Intruduce tu wallet" />
+                <button> Consultar Puesto </button>
+              </form>
+            </div>
+            <hr />
+            <span>Consulta quien viene a cobrar</span>
+            <form action="" onSubmit={e => getWalletFromId(e, 3)}>
+              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <button> Consultar </button>
+            </form>
+            <hr />
+            <div className="">
+              Proximo a cobrar: <br />
+              {nextToCollect3 && nextToCollect3}<br />
+              {in3 && in3}
+            </div>
+          </div>
+        </div>
+
+        {/*  <div className="col-12 col-sm-6 p-4">
+          <div className="text-white bg-section h-100" style={bgSection1}>
+            <h2 className="ddd">2</h2>
+            {coversId2 && <>Bloques pagados: {coversId2}</>}<br></br>
+            {investorId2 && <>Generados: {investorId2}</>}
+            <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
+            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[1], 2)}> Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+            <hr />
+            <div>
+              <span>Consulta tu puesto</span>
+              <input type="text" placeholder="Intruduce tu wallet" />
+              <button> Consultar Puesto </button>
+            </div>
+            <hr />
+            <span>Consulta quien viene a cobrar</span>
+            <input type="text" placeholder="Intruduce un numero de bloque" />
+            <button> Consultar </button>
+            <hr />
+            <div className="">
+              Proximo a cobrar: <br />
+              {nextToCollect1 && nextToCollect1}<br />
+              {in1 && in1}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-sm-6 p-4">
+          <div className="text-white bg-section h-100" style={bgSection1}>
+            <h2 className="ddd">3</h2>
+            {coversId1 && <>Bloques pagados: {coversId1}</>}<br></br>
+            {investorId1 && <>Generados: {investorId1}</>}
+            <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
+            {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[2], 3)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+            <hr />
+            <div>
+              <span>Consulta tu puesto</span>
+              <input type="text" placeholder="Intruduce tu wallet" />
+              <button> Consultar Puesto </button>
+            </div>
+            <hr />
+            <span>Consulta quien viene a cobrar</span>
+            <input type="text" placeholder="Intruduce un numero de bloque" />
+            <button> Consultar </button>
+            <hr />
+            <div className="">
+              Proximo a cobrar: <br />
+              {nextToCollect1 && nextToCollect1}<br />
+              {in1 && in1}
+            </div>
+          </div>
+        </div> */}
+
+        {/* {permisions && permisions >= 0 ?
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="ddd">1</h2>
               {coversId1 && <>Bloques generados: {coversId1}</>}
               <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
-              <Turno turno={turno1} />
               <div className="">
                 Proximo a cobrar: <br />
                 {nextToCollect1 && nextToCollect1}<br />
@@ -261,7 +427,6 @@ function App() {
               <p className="text-white">No disponible!</p>
               <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => alert("Espere un momento")}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-              <Turno turno={turno1} />
               <div className="mt-3">
                 Proximo a cobrar: <br />
                 {nextToCollect1 && nextToCollect1}<br />
@@ -269,9 +434,9 @@ function App() {
               </div>
             </div>
           </div>
-        }
+        } */}
 
-        {permisions && permisions >= 1 ?
+        {/* {permisions && permisions >= 1 ?
           <div className="col-12 col-sm-4 p-4">
             <div className="text-white bg-section bg-success h-100">
               <h2 className="">2</h2>
@@ -280,7 +445,6 @@ function App() {
                 <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>}
               <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[1], 2)}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-              <Turno turno={turno2} />
               <div className="mt-3">
                 Proximo a cobrar: <br />
                 {nextToCollect2 && nextToCollect2}<br />
@@ -296,7 +460,7 @@ function App() {
               <p className="text-white">Completa el nivel 1 para acceder al nivel 2</p>
               <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => alert("Debe completar el nivel 1 primero")}>Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading </button>}
-              <Turno turno={turno2} />
+
               <div className="mt-3">
                 Proximo a cobrar: <br />
                 {nextToCollect2 && nextToCollect2}<br />
@@ -315,7 +479,7 @@ function App() {
                 <p className="text-white">Completa el nivel 2 para acceder al nivel 3</p>}
               <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
               {!loading && wallet ? <button className="btn btn1 btn-danger mb-2" onClick={() => deposit(wallet, prices[2], 3)}>Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary"> Loading </button>}
-              <Turno turno={turno3} />
+
               <div className="mt-3">
                 Proximo a cobrar: <br />
                 {nextToCollect3 && nextToCollect3}<br />
@@ -339,14 +503,11 @@ function App() {
               </div>
             </div>
           </div>
-        }
+        } */}
       </div>
+
       {loading && <Loder />}
-      <div className="row">
-        <div className="col-12">
-          <div className="mt-5"> Todos los derechos reservados © - piramid.lol </div>
-        </div>
-      </div>
+      <Footer />
     </div >
   )
 }

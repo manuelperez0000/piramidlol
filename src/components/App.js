@@ -278,7 +278,7 @@ function App() {
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 1)}>
-              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
               <button> Consultar </button>
             </form>
             <hr />
@@ -310,7 +310,7 @@ function App() {
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 2)}>
-              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
               <button> Consultar </button>
             </form>
             <hr />
@@ -341,7 +341,7 @@ function App() {
             <hr />
             <span>Consulta quien viene a cobrar</span>
             <form action="" onSubmit={e => getWalletFromId(e, 3)}>
-              <input name="wallet2" type="text" placeholder="Intruduce un id" />
+              <input name="wallet2" type="text" placeholder="Intruduce el n° de bloque" />
               <button> Consultar </button>
             </form>
             <hr />

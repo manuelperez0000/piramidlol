@@ -1,14 +1,45 @@
-div{
-  font-family: 'Press Start 2P', cursive;
-  color:white;
+:root{
+  --text-dark:rgb(17, 13, 17);
+  --text-color:rgb(130,71,229);
+  --text-light:rgb(224, 204, 255);
 }
 .container-fluid{
-  background-color: rgb(130,71,229);
+  background-color: rgb(224, 204, 255);
   min-height:100vh;
+}
+nav{
+  position: fixed;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: rgb(130,71,229);
+}
+nav img{
+  height:30px;
+}
+
+.redes img{
+  height: 40px;
+  margin: 0px 10px;
+}
+.text-logo{
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--text-light);
+  font-family: 'Courier New', Courier, monospace;
 }
 .wallet{
   z-index: 2;
-
+}
+.mt-60{
+  margin-top: 60px;
 }
 
 .bg-section{
@@ -68,18 +99,4 @@ p{
 }
 .reguard{
   font-size:30px;
-}
-.redes{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top:10px;
-  padding-bottom: 10px;
-  border-bottom-left-radius: 18px;
-  border-bottom-right-radius: 18px;
-  background-color: rgba(0, 0, 0, 0.226);
-}
-.redes img{
-  height: 40px;
-  margin: 0px 10px;
 }

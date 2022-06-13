@@ -1,0 +1,29 @@
+.sidebar{
+    background-color: rgba(237, 217, 243, 0.726);
+    height: 90vh;
+    color: black;
+    border-bottom-right-radius: 15px;
+    position: sticky;
+    top: 60px;
+    bottom: 0px;
+}
+.sidebarWrap{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+.text-sidebar{
+    color:rgb(54, 54, 54);
+    border: 0px;
+    border-bottom: 1px solid rgba(173, 173, 173, 0.527);
+    padding: 15px 15px;
+}
+.text-sidebar:hover{
+    background-color: rgb(252, 234, 255);
+}
+.link{
+    
+    text-decoration: none !important;
+}

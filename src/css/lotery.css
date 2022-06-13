@@ -1,0 +1,71 @@
+:root {
+    --text-dark: rgb(17, 13, 17);
+    --text-color: rgb(130, 71, 229);
+    --text-light: rgb(224, 204, 255);
+    --bg-1: rgba(237, 217, 243, 0.726);
+    --bg-2: rgb(130, 71, 229);
+}
+
+.lotery {
+    background: linear-gradient(rgba(5, 52, 139, 0.712), rgba(124, 5, 70, 0.603)), url(../img/backgrounds/lotery.webp);
+    padding: 10px;
+    border-radius: 15px;
+    padding: 30px;
+    background-size: cover;
+    background-position: center;
+}
+
+.text-lotery {
+    font-size: 40px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.lotery-section {
+    background-color: var(--bg-1);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.rondas {
+    background-color: var(--bg-2);
+    border-radius: 10px;
+    color: var(--text-light);
+    padding: 10px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.numberRonda {
+    font-size: 70px;
+    line-height: 60px;
+    padding-bottom: 10px;
+}
+
+.ticket-btn {
+    width: 100%;
+    background-color: var(--bg-2);
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    color: var(--text-light);
+    height: 40px;
+}
+.input-consult{
+    background-color: white;
+    margin-top: 10px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 200px;
+    border: none;
+    color: var(--text-light);
+    height: 40px;
+}
+.btn-consult {
+    background-color: var(--bg-2);
+    margin-top: 10px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border: none;
+    color: var(--text-light);
+    height: 40px;
+}

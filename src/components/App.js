@@ -6,7 +6,7 @@ import Loder from "./loader/loader"
 import Navbar from "./navbar/navbar"
 import Sidebar from "./sidebar/sidebar"
 import Routes from "../routes"
-import { BrowserRouter } from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 const web3 = new Web3(window.ethereum)
 const contract = new web3.eth.Contract(binanceContract.abi, binanceContract.address)
 function App() {
@@ -56,7 +56,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter >
+    <HashRouter >
       <Navbar wallet={wallet} resumeWallet={resumeWallet} comproveChain={comproveChain} />
       <div className="container-fluid mt-60">
         <div className="row p-0">
@@ -73,7 +73,7 @@ function App() {
         </div>
         {loading && <Loder />}
       </div >
-    </BrowserRouter>
+    </HashRouter>
 
   )
 }

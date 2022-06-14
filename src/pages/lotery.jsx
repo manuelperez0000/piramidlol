@@ -52,6 +52,13 @@ const Lotery = ({ wallet }) => {
                 Bienvenido a la loteria descentralizada<br /> de Piramid.lol
             </h1>
         </div>
+        <div className='mt-4'>
+            <h4>¿Como funciona?</h4>
+            <p>Para participar en la lotería descentralizada solo deberás comprar uno o más tickets en una ronda, el precio de cada ticket es de 1 matic, al completar la venta de 10 tickets el contrato
+                elegirá de forma aleatoria a una de las 10 wallets que se encuentran almacenadas y realizara un pago único de 10 Matic al ganador y durante este proceso se reiniciaran todas las wallets para así 
+                continuar con la siguiente ronda, solo se elegirá un ganador al completar los 10 tickets.
+            </p>
+        </div>
         <div className='mt-3 lotery-section'>
             <div className="">
                 <div className="row">

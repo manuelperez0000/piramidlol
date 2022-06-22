@@ -183,12 +183,12 @@ const Clasic = () => {
             const permis = await contract.methods.permisions(_wallet).call()
             if (permis == 0) {
                 setBgSection1({ backgroundColor: "#198754" })
-                setBgSection2({ backgroundColor: "red" })
-                setBgSection3({ backgroundColor: "red" })
+                setBgSection2({ backgroundColor: "rgba(255, 34, 71, 0.918)" })
+                setBgSection3({ backgroundColor: "rgba(255, 34, 71, 0.918)" })
             } else if (permis == 1) {
                 setBgSection1({ backgroundColor: "#198754" })
                 setBgSection2({ backgroundColor: "#198754" })
-                setBgSection3({ backgroundColor: "red" })
+                setBgSection3({ backgroundColor: "rgba(255, 34, 71, 0.918)" })
             } else if (permis >= 2) {
                 setBgSection1({ backgroundColor: "#198754" })
                 setBgSection2({ backgroundColor: "#198754" })
@@ -259,7 +259,7 @@ const Clasic = () => {
                         {coversId1 && <>Bloques pagados: {coversId1}</>}<br></br>
                         {investorId1 && <>Generados: {investorId1}</>}
                         <h3 className="text-white mt-2">Gana 3.4 MATIC</h3>
-                        {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+                        {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[0], 1)}> Stake <br /> 2  MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
                         <hr />
                         <div>
                             <form action="" onSubmit={e => getId(e, 1)}>

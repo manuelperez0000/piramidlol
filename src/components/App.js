@@ -65,7 +65,7 @@ function App() {
           </div>
           <div className="col-12 col-md-10">
             <div className="container-fluid p-0">
-              <div className="row">
+              <div className="row gx-0">
                 <Routes wallet={wallet} />
               </div>
             </div>

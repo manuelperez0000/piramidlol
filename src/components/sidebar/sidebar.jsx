@@ -11,12 +11,19 @@ const Sidebar = () => {
                     <div className='text-sidebar'>
                         ♥ Piramid clasic
                     </div>
-                </NavLink> 
+                </NavLink>
                 <NavLink to='/lotery' className='link'>
                     <div className='text-sidebar'>
                         ♦ Lotery
                     </div>
                 </NavLink>
+
+                <NavLink to='/tokens' className='link'>
+                    <div className='text-sidebar'>
+                        ☻  Tokens <b className='new'>New</b>
+                    </div>
+                </NavLink>
+
                 <NavLink to='/referals' className='link'>
                     <div className='text-sidebar'>
                         ♠  Referals
@@ -27,24 +34,19 @@ const Sidebar = () => {
                         ☺  Launcher
                     </div>
                 </NavLink>
-                <NavLink to='/tokens' className='link'>
-                    <div className='text-sidebar'>
-                        ☻  Tokens
-                    </div>
-                </NavLink>
                 <NavLink to='/market' className='link'>
                     <div className='text-sidebar'>
-                        •  NFT's
+                        ◘ NFT's
                     </div>
                 </NavLink>
             </div>
             <div className='w-100'>
                 <div className='mb-4 d-flex justify-content-around align-items-center'>
                     <a className='text-center' href="https://discord.gg/dCDFs3XjRK" target="_blank">
-                        <img height={"50px"} src={discord} alt="" /><br/> Discord
+                        <img height={"50px"} src={discord} alt="" /><br /> Discord
                     </a>
                     <a className='text-center' href={"https://polygonscan.com/address/" + binanceContract.address} target="_blank">
-                        <img height={"50px"} src={polygon} alt="" /><br/> Polygon
+                        <img height={"50px"} src={polygon} alt="" /><br /> Polygon
                     </a>
                 </div>
             </div>

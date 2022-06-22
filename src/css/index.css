@@ -145,3 +145,10 @@ p{
   max-width: 90vw;
   max-height: 90vh;
 }
+.new{
+  background-color: rgba(255, 34, 71, 0.918);
+  border-radius: 3px;
+  color: #fff;
+  padding: 0px 10px;
+  font-weight: lighter;
+}

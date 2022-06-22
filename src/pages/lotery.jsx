@@ -64,8 +64,8 @@ const Lotery = ({ wallet }) => {
                 <div className="row">
                     <div className="col-9">
                         <h1>Tickets vendidos {tickets} / 10</h1>
-                        <h4>Precio: 1 MATIC</h4>
-                        <p>Ultimo ganador: {lastWiner && lastWiner == "0x0000000000000000000000000000000000000000" && <>Todavia no tenemos un ganador</>}</p>
+                        <h4>Precio: 1.1 MATIC</h4>
+                        <p>Ultimo ganador: {lastWiner && lastWiner == "0x0000000000000000000000000000000000000000" ? <>Todavia no tenemos un ganador</> : lastWiner}</p>
                         <div></div>
                         <h4>Consultar ganadores anteriores</h4>
                         <form action="" onSubmit={(e) => winers(e)}>

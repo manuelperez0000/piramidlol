@@ -286,12 +286,26 @@ const Clasic = () => {
                 {/***************** 2 ************************** */}
 
                 <div className="col-12 col-md-6 col-lg-4 text-center p-2">
-                    <div className="text-white bg-section h-100" style={bgSection1}>
+                    <div className="text-white bg-section h-100" style={bgSection2}>
                         <h2 className="ddd mt-2">Stake 2</h2><hr />
                         {coversId2 && <>Bloques pagados: {coversId2}</>}<br></br>
                         {investorId2 && <>Generados: {investorId2}</>}
                         <h3 className="text-white mt-2">Gana 6.12 MATIC</h3>
-                        {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[1], 2)}> Stake <br /> 3.4 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+
+                        {loading ?
+                            <button className="btn btn-secondary mb-2"> Loading </button>
+                            :
+                            permisions && permisions > 0 ?
+                            <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[1], 2)}>
+                                Stake <br /> 3.4 MATIC
+                            </button>
+                            :
+                            <button className="btn btn1 btn-success mb-2">
+                                Complete piramide 1
+                            </button>
+                        }
+
+
                         <hr />
                         <div>
                             <form action="" onSubmit={e => getId(e, 2)}>
@@ -317,12 +331,24 @@ const Clasic = () => {
                 {/***************** 3 ************************** */}
 
                 <div className="col-12 col-md-6 col-lg-4 text-center p-2">
-                    <div className="text-white bg-section h-100" style={bgSection1}>
+                    <div className="text-white bg-section h-100" style={bgSection3}>
                         <h2 className="ddd mt-2">Stake 3</h2><hr />
                         {coversId3 && <>Bloques pagados: {coversId3}</>}<br></br>
                         {investorId3 && <>Generados: {investorId3}</>}
                         <h3 className="text-white mt-2">Gana 11.62 MATIC</h3>
-                        {!loading && wallet ? <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[2], 3)}> Stake <br /> 6.12 <br /> MATIC</button> : <button className="btn btn-secondary mb-2"> Loading</button>}
+
+                        {loading ?
+                            <button className="btn btn-secondary mb-2"> Loading </button>
+                            :
+                            permisions && permisions > 0 ?
+                            <button className="btn btn1 btn-success mb-2" onClick={() => deposit(wallet, prices[2], 3)}>
+                                Stake <br /> 6.12 MATIC
+                            </button>
+                            :
+                            <button className="btn btn1 btn-success mb-2">
+                                Complete piramide 2
+                            </button>
+                        }
                         <hr />
                         <div>
                             <form action="" onSubmit={e => getId(e, 3)}>

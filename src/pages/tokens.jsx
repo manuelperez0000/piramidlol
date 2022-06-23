@@ -18,9 +18,9 @@ const Tokens = () => {
     const start = async () => {
         const _wallet = await startApp.getWallet()
         setWallet(_wallet)
-        console.log(contract.methods)
+        //console.log(contract.methods)
         contract.methods.amountSold().call().then(_ => setAmountSold(_))
-        contract.methods.buyedTokens(_wallet).call().then(_ => setBuyedTokens(_))
+        contract.methods.buyedTokens(_wallet).call().then(_ =>setBuyedTokens(_))
         contract.methods.pause().call().then(_ => setPausedContract(_))
     }
 
@@ -138,7 +138,7 @@ const Tokens = () => {
                                 <div className="col-12 col-md-4 p-3 tokenWrap">
                                     <div className='between'>
                                         <b>Ventas Acumuladas</b>
-                                        <p>{amountSold} MATIC</p>
+                                        <p>{amountSold && web3.utils.fromWei(amountSold,"ether")} PIRAMID</p>
                                     </div>
                                     <div className='between'>
                                         <b>Status</b>
@@ -158,7 +158,7 @@ const Tokens = () => {
                                     </div>
                                     <div className='between'>
                                         <b>Tu Compra</b>
-                                        <p>{buyedTokens} PIRAMID</p>
+                                        <p>{buyedTokens && web3.utils.fromWei(buyedTokens,"ether")} PIRAMID</p>
                                     </div>
                                     <div className='between'>
                                         <b>Soft Cap</b>

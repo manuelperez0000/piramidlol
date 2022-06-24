@@ -18,7 +18,7 @@ const Tokens = () => {
     const start = async () => {
         const _wallet = await startApp.getWallet()
         setWallet(_wallet)
-        //console.log(contract.methods)
+        console.log(contract.methods)
         contract.methods.amountSold().call().then(_ => setAmountSold(_))
         contract.methods.buyedTokens(_wallet).call().then(_ =>setBuyedTokens(_))
         contract.methods.pause().call().then(_ => setPausedContract(_))
@@ -28,6 +28,7 @@ const Tokens = () => {
         const value = web3.utils.toWei(amount, "ether")
         contract.methods.buy().send({ from: wallet, value })
     }
+
     return (
         <div className="container-fluid pt-3">
             {modal && <div className="modalBackground">
@@ -181,11 +182,7 @@ const Tokens = () => {
                                         <p>1 MATIC = 100 PIRAMID</p>
                                     </div>
                                     <div className='text-center'>
-                                        {pausedContract ? 
                                         <button className='btn btn-secondary mt-4' disabled> Reclamar mis tokens </button>
-                                        :
-                                        <button className='btn btn-primary mt-4'> Reclamar mis tokens </button>
-                                        }
                                     </div>
                                 </div>
                             </div>

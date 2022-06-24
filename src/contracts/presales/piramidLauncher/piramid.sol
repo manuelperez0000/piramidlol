@@ -31,7 +31,6 @@ contract contractCaller is buyInterface {
         c = calledToken(0x6E328eba6CB1ABd175F6622262DB1a3a2AfE6Da8);
     }
 
-
     modifier Pause(){
         if(msg.sender != contractOwner) require(pause == false,"Contract Paused");
         _;
